@@ -9,6 +9,8 @@ const library = document.querySelector('#library');
 const dialog = document.getElementById('dialog');
 const bookForm = document.querySelector('#book-form');
 const bookDisplay = document.querySelector('#book-display');
+const bookInfo= document.querySelector('#book-info');
+const bookButtons= document.querySelector('#book-buttons');
 
 const showDialogButton = document.querySelector('#show-dialog');
 showDialogButton.addEventListener('click', () => {
@@ -71,7 +73,8 @@ function removeBookFromLibrary (index) {
     myLibrary.forEach((book, index) => {
         book.index = index;
     })
-    bookDisplay.textContent = '';
+    bookInfo.textContent = '';
+    bookButtons.textContent = '';
 }
 
 function createRemoveButton(index) {
@@ -85,6 +88,29 @@ function createRemoveButton(index) {
     return removeButton;
 }
 
+function createUpdateReadButton(index) {
+    bookButtons.textContent = '';
+    const updateReadButton = document.createElement('button');
+    updateReadButton.value = index;
+    if (myLibrary[index].read === 'Yes') {
+        updateReadButton.textContent = 'Mark As Unread';
+    } else {
+        updateReadButton.textContent = 'Mark As Read';
+    }
+    updateReadButton.addEventListener('click', (event) => {
+        const value = event.target.value;
+        if (myLibrary[value].read === 'Yes') {
+            myLibrary[value].read = 'No'
+            updateReadButton.textContent = 'Mark As Read';
+        } else {
+            myLibrary[value].read = 'Yes'
+            updateReadButton.textContent = 'Mark As Unread';
+        }
+        bookInfo.innerHTML = myLibrary[index].info();
+    });
+    return updateReadButton;
+}
+
 //Updates the library display and makes title clickable to reveal book information and remove button
 function updateLibraryDisplay (book) {   
     const bookText = document.createElement('div');
@@ -94,10 +120,12 @@ function updateLibraryDisplay (book) {
     //Make title clickable
     bookText.addEventListener('click', (event) => {
         event.preventDefault();
-        bookDisplay.innerHTML = book.info();
+        bookInfo.innerHTML = book.info();
         const index = book.index;
+        const updateReadButton = createUpdateReadButton(index);
+        bookButtons.appendChild(updateReadButton);
         const removeButton = createRemoveButton(index);
-        bookDisplay.appendChild(removeButton);
+        bookButtons.appendChild(removeButton);
     })
     library.appendChild(bookText);
 }
