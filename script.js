@@ -26,6 +26,7 @@ addButton.addEventListener('click', (event) => {
     const check = checkInputs(title, author, pages);
     if (check === true){
         addBookToLibrary(title, author, pages, read);
+        errorMessage.textContent = '';
         bookForm.reset();
         dialog.close();
     }else{
@@ -49,11 +50,13 @@ const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (event) =>{
     event.preventDefault();
     bookForm.reset();
+    errorMessage.textContent = '';
 });
 
 const closeButton = document.querySelector('#close');
 closeButton.addEventListener('click', (event) => {
     event.preventDefault();
+    errorMessage.textContent = '';
     dialog.close();
 });
 
@@ -187,7 +190,9 @@ function updateLibraryDisplay (book) {
         }
         //If book is not already displayed, create a new book display
         if (check === false){
+            const bgColor = window.getComputedStyle(event.target).backgroundColor;
             const bookDisplay = document.createElement('div');
+            bookDisplay.style.borderColor = bgColor;
             bookDisplay.className = 'book-display';
             bookDisplay.id = book.index;
             const bookInfo = document.createElement('div');

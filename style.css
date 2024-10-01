@@ -59,11 +59,80 @@ h1 {
     border: 1px solid rgb(59, 173, 59);
 }
 
+#dialog {
+    border-style: none;
+    box-shadow: 3px 3px 10px rgb(97, 97, 97);
+}
+
 #book-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 300px;
+    position: relative;
+}
+
+#error-message {
+    height: 1rem;
+    color: red;
+    text-align: center;
+}
+
+#form-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+#form-buttons button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100px;
+    border-style: none;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    background-color: gray;
+    color: white;
+}
+
+#form-buttons #add {
+    background-color: rgb(59, 173, 59);
+}
+
+#form-buttons #add:hover {
+    border: 1px solid rgb(59, 173, 59);
+    background-color: white;
+    color: rgb(59, 173, 59);
+}
+
+#form-buttons #clear:hover {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
+}
+
+#close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-style: none;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
+}
+
+
+#close:hover {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
 }
 
 #library {
@@ -91,6 +160,8 @@ h1 {
     min-height: 300px;
     padding: 20px;
     position: relative;
+    border-left: 10px solid;
+    border-color: none;
 }
 
 #book-buttons {
@@ -102,13 +173,12 @@ h1 {
     border-style: none;
     height: 2rem;
     padding: 10px;
-    height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 25px;
     color: white;
-    width: 125px;
+    width: 120px;
 }
 
 #book-buttons .remove-button {
@@ -156,6 +226,10 @@ h1 {
     gap: 10px;
 }
 
+#book-info {
+    padding-top: 10px;
+}
+
 .exit-button {
     width: 20px;
     height: 20px;
@@ -165,8 +239,8 @@ h1 {
     border-radius: 50%;
     border-style: none;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
     color: white;
     background-color: gray;
     font-weight: bold;
