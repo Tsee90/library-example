@@ -38,7 +38,7 @@ function checkInputs (title, author, pages) {
         return 'Please add title';
     }else if (author === '') {
         return 'Please add author';
-    }else if (pages === '' | parseInt(pages) !== 'number' | parseInt(pages) < 1) {
+    }else if (pages === '' | Number.isNaN(parseInt(pages)) | parseInt(pages) < 1) {
         return 'Please enter positive integer page number';
     }else {
         return true;
