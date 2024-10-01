@@ -148,6 +148,7 @@ h1 {
     width: 200px;
     background-color: rgb(194, 141, 92);
     border: 5px ridge rgb(180, 131, 86);
+    min-height: 610px;
 }
 
 .book-display {

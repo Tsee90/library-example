@@ -237,20 +237,8 @@ addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224
 addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
 addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
 addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
-addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
-addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
-addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
-addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
-
-addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
-addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
-addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
-addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
-
-addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
-addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
-addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
-addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
+addBookToLibrary('The Hobbit', 'J.R.R Tolkien', '304', 'No');
+addBookToLibrary('Dark Matter', 'Blake Crouch','342', 'Yes');
 
 
 
