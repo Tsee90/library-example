@@ -8,9 +8,7 @@ let myLibrary = [];
 const library = document.querySelector('#library');
 const dialog = document.getElementById('dialog');
 const bookForm = document.querySelector('#book-form');
-const bookDisplay = document.querySelector('#book-display');
-const bookInfo= document.querySelector('#book-info');
-const bookButtons= document.querySelector('#book-buttons');
+const displayContainer = document.querySelector('#display-container');
 
 const showDialogButton = document.querySelector('#show-dialog');
 showDialogButton.addEventListener('click', () => {
@@ -48,7 +46,7 @@ function Book(title, author, pages, read, index) {
     this.pages = pages;
     this.read = read;
     this.index = index;
-    this.info = function () {return "Title: " + this.title + "<br>Author: " + this.author + "<br>Pages: " + this.pages  + "<br>Read? " + this.read}
+    this.info = function () {return "<strong>Title:</strong> " + this.title + "<br><strong>Author:</strong> " + this.author + "<br><strong>Pages:</strong> " + this.pages  + "<br><strong>Read?</strong> " + this.read}
 }
 
 function addBookToLibrary (title, author, pages, read) {
@@ -66,6 +64,13 @@ function removeBookFromLibrary (index) {
         if (id === index) {
             div.remove();
         }
+    });
+    const displayList = displayContainer.querySelectorAll('.book-display');
+    displayList.forEach((div) => {
+        const id = div.id;
+        if(id === index){
+            div.remove();
+        }
     })
     //Update myLibrary to remove indexed book
     myLibrary = myLibrary.filter((book) => book.index !== index);
@@ -73,8 +78,6 @@ function removeBookFromLibrary (index) {
     myLibrary.forEach((book, index) => {
         book.index = index;
     })
-    bookInfo.textContent = '';
-    bookButtons.textContent = '';
 }
 
 function createRemoveButton(index) {
@@ -89,7 +92,6 @@ function createRemoveButton(index) {
 }
 
 function createUpdateReadButton(index) {
-    bookButtons.textContent = '';
     const updateReadButton = document.createElement('button');
     updateReadButton.value = index;
     if (myLibrary[index].read === 'Yes') {
@@ -106,7 +108,14 @@ function createUpdateReadButton(index) {
             myLibrary[value].read = 'Yes'
             updateReadButton.textContent = 'Mark As Unread';
         }
-        bookInfo.innerHTML = myLibrary[index].info();
+        const displayList = displayContainer.querySelectorAll('.book-display');
+        displayList.forEach((div) => {
+            if (parseInt(index) === parseInt(div.id)){
+                const bookInfo = div.querySelector('#book-info');
+                bookInfo.innerHTML = myLibrary[index].info();
+            }
+        });
+        
     });
     return updateReadButton;
 }
@@ -120,14 +129,39 @@ function updateLibraryDisplay (book) {
     //Make title clickable
     bookText.addEventListener('click', (event) => {
         event.preventDefault();
-        bookInfo.innerHTML = book.info();
-        const index = book.index;
-        const updateReadButton = createUpdateReadButton(index);
-        bookButtons.appendChild(updateReadButton);
-        const removeButton = createRemoveButton(index);
-        bookButtons.appendChild(removeButton);
-    })
+        let check = false;
+        const displayList = displayContainer.querySelectorAll('.book-display');
+        if (displayList.length > 0){
+            displayList.forEach((div) => {
+                if(event.target.id === div.id){
+                    displayContainer.removeChild(div);
+                    event.target.classList.remove('focused');
+                    check = true;
+                }
+            });
+        }
+        if (check === false){
+            const bookDisplay = document.createElement('div');
+            bookDisplay.className = 'book-display';
+            bookDisplay.id = book.index;
+            const bookInfo = document.createElement('div');
+            bookInfo.id = 'book-info';
+            const bookButtons = document.createElement('div');
+            bookButtons.id = 'book-buttons';
+            bookText.classList.add('focused');
+            bookInfo.innerHTML = book.info();
+            const index = book.index;
+            const updateReadButton = createUpdateReadButton(index);
+            bookButtons.appendChild(updateReadButton);
+            const removeButton = createRemoveButton(index);
+            bookButtons.appendChild(removeButton);
+            bookDisplay.appendChild(bookInfo);
+            bookDisplay.appendChild(bookButtons);
+            displayContainer.appendChild(bookDisplay);
+        }
+    });
     library.appendChild(bookText);
+    
 }
 
 
