@@ -47,7 +47,7 @@ h1 {
     height: 2rem;
     border-style: none;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 25px;
     background-color: rgb(59, 173, 59);
     color: white;
 }
@@ -80,21 +80,56 @@ h1 {
     font-size: 1rem;
     box-shadow: 2px 2px 5px gray;
     overflow-wrap: break-word;
-    min-width: 200px;
+    width: 300px;
+    min-height: 300px;
+    padding: 20px;
+}
+
+#book-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#book-buttons  button {
+    border-style: none;
+    height: 2rem;
+    padding: 10px;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    color: white;
+    width: 125px;
+}
+
+#book-buttons .remove-button {
+    background-color: rgb(226, 31, 31);
+}
+
+#book-buttons .remove-button:hover {
+    border: 1px solid rgb(226, 31, 31);
+    background-color: white;
+    color: rgb(226, 31, 31);
+}
+
+#book-buttons .update-button {
+    background-color: gray;
 }
 
 .book {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    white-space: nowrap;
     border-bottom: 5px ridge  rgb(180, 131, 86);
-    height: 2rem;
-    padding-left: 10px;
+    height: auto;
+    padding: 5px 5px;
 }
 
 .book:hover{
     cursor: pointer;
+    border-left: 5px solid white;
+    border-bottom: 5px ridge white;
 }
 
 .book.focused {

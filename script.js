@@ -82,6 +82,7 @@ function removeBookFromLibrary (index) {
 
 function createRemoveButton(index) {
     const removeButton = document.createElement('button');
+    removeButton.className = 'remove-button';
     removeButton.value = index;
     removeButton.textContent = 'Remove';
     removeButton.addEventListener('click', (event) => {
@@ -94,6 +95,7 @@ function createRemoveButton(index) {
 function createUpdateReadButton(index) {
     const updateReadButton = document.createElement('button');
     updateReadButton.value = index;
+    updateReadButton.className = 'update-button';
     if (myLibrary[index].read === 'Yes') {
         updateReadButton.textContent = 'Mark As Unread';
     } else {
@@ -164,6 +166,10 @@ function updateLibraryDisplay (book) {
     
 }
 
+addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
+addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
+addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
+addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
 
 
 
