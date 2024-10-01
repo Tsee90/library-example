@@ -165,14 +165,9 @@ h1 {
     font-weight: bold;
 }
 
-.exit-button:hover {
+.exit-button:hover, #book-buttons .update-button:hover {
     border: 1px solid gray;
     background-color: white;
     color: gray;
 }
 
-#book-buttons .update-button:hover {
-    border: 1px solid gray;
-    background-color: white;
-    color: gray;
-}

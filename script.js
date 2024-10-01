@@ -112,7 +112,7 @@ function createUpdateReadButton(index) {
         }
         const displayList = displayContainer.querySelectorAll('.book-display');
         displayList.forEach((div) => {
-            if (parseInt(index) === parseInt(div.id)){
+            if (parseInt(value) === parseInt(div.id)){
                 const bookInfo = div.querySelector('#book-info');
                 bookInfo.innerHTML = myLibrary[index].info();
             }
@@ -128,10 +128,8 @@ function createExitButton (index) {
     exitButton.value = index;
     exitButton.className = 'exit-button';
     exitButton.addEventListener('click', (event) => {
-        event.preventDefault();
         const value = event.target.value;
         const displayList = displayContainer.querySelectorAll('.book-display');
-        
         displayList.forEach((div) => {
             if (parseInt(value) === parseInt(div.id)){
                 div.remove();
@@ -160,6 +158,7 @@ function updateLibraryDisplay (book) {
         let check = false;
         const displayList = displayContainer.querySelectorAll('.book-display');
         if (displayList.length > 0){
+            //checks if book is already displayed
             displayList.forEach((div) => {
                 if(event.target.id === div.id){
                     displayContainer.removeChild(div);
@@ -168,6 +167,7 @@ function updateLibraryDisplay (book) {
                 }
             });
         }
+        //If book is not already displayed, create a new book display
         if (check === false){
             const bookDisplay = document.createElement('div');
             bookDisplay.className = 'book-display';
@@ -191,10 +191,10 @@ function updateLibraryDisplay (book) {
         }
     });
     library.appendChild(bookText);
-    
 }
 
 function getRandomColor() {
+    //Array of pastel colors for red, green, blue, orange, yellow, purple
     const colors = [
         '#FFB3BA', 
         '#AEC6CF', 
@@ -203,11 +203,11 @@ function getRandomColor() {
         '#CBAACB', 
         '#FFB347'  
     ];
-
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
 }
 
+//Add starting books as filler
 addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
 addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
 addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
