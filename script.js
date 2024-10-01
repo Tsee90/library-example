@@ -9,6 +9,7 @@ const library = document.querySelector('#library');
 const dialog = document.getElementById('dialog');
 const bookForm = document.querySelector('#book-form');
 const displayContainer = document.querySelector('#display-container');
+const errorMessage = document.querySelector('#error-message');
 
 const showDialogButton = document.querySelector('#show-dialog');
 showDialogButton.addEventListener('click', () => {
@@ -22,10 +23,27 @@ addButton.addEventListener('click', (event) => {
     const author = document.querySelector('#author').value;
     const pages = document.querySelector('#pages').value;
     const read = document.querySelector('input[name="read"]:checked').value;
-    addBookToLibrary(title, author, pages, read);
-    bookForm.reset();
-    dialog.close();
+    const check = checkInputs(title, author, pages);
+    if (check === true){
+        addBookToLibrary(title, author, pages, read);
+        bookForm.reset();
+        dialog.close();
+    }else{
+        errorMessage.textContent = check;
+    }
 });
+
+function checkInputs (title, author, pages) {
+    if (title === '') {
+        return 'Please add title';
+    }else if (author === '') {
+        return 'Please add author';
+    }else if (pages === '' | parseInt(pages) !== 'number' | parseInt(pages) < 1) {
+        return 'Please enter positive integer page number';
+    }else {
+        return true;
+    }
+}
 
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (event) =>{

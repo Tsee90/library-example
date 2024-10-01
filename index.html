@@ -17,8 +17,11 @@
             <label for="pages">Pages:</label>
             <input type="number" name="pages" id="pages" step="1" min="1">
             <label for="read">Read?</label>
-            <span><input type="radio" name="read" value="Yes">Yes</span>
-            <span><input type="radio" name="read" value="No" checked>No</span>
+            <div>
+                <input type="radio" name="read" value="Yes">Yes
+                <input type="radio" name="read" value="No" checked>No
+            </div>
+            <div id="error-message"></div>
             <button id="add">Add</button>
             <button id="clear">Clear</button>
             <button id="close">Close</button>

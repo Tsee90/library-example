@@ -59,6 +59,12 @@ h1 {
     border: 1px solid rgb(59, 173, 59);
 }
 
+#book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 #library {
     grid-area: shelf;
     box-sizing: border-box;
