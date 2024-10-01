@@ -41,6 +41,8 @@ function checkInputs (title, author, pages) {
         return 'Please add author';
     }else if (pages === '' | Number.isNaN(parseInt(pages)) | parseInt(pages) < 1) {
         return 'Please enter positive integer page number';
+    }else if (parseInt(pages) > 1000000000){
+        return 'Over a million pages? Really?';
     }else {
         return true;
     }
@@ -235,6 +237,21 @@ addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224
 addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
 addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
 addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
+addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
+addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
+addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
+addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
+
+addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
+addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
+addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
+addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
+
+addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
+addBookToLibrary('Hard-boiled Wonderland and the End of the World', 'Haruki Murakami', '416', 'Yes');
+addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
+addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
+
 
 
 

@@ -23,7 +23,7 @@ h1 {
     "shelf display"
     "shelf ."
     ;
-    gap: 10px;
+    gap: 20px;
     padding: 0px 50px;
 }
 
@@ -135,15 +135,19 @@ h1 {
     color: gray;
 }
 
-#library {
+#library-wrapper {
     grid-area: shelf;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 215px;
+}
+
+#library {
     box-sizing: border-box;
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: 200px;
     background-color: rgb(194, 141, 92);
     border: 5px ridge rgb(180, 131, 86);
-    overflow: auto;
-    overflow-wrap: none;
 }
 
 .book-display {
@@ -199,9 +203,12 @@ h1 {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    width: 100%;
     border-bottom: 5px ridge  rgb(180, 131, 86);
     height: auto;
     padding: 5px 5px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .book:hover{

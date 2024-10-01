@@ -11,11 +11,11 @@
     <dialog id="dialog">
         <form action="" id="book-form">
             <label for="title">Title:</label>
-            <input type="text" name="title" id="title">
+            <input type="text" name="title" id="title" maxlength="90">
             <label for="author">Author:</label>
-            <input type="text" name="author" id="author">
+            <input type="text" name="author" id="author" maxlength="60">
             <label for="pages">Pages:</label>
-            <input type="number" name="pages" id="pages" step="1" min="1">
+            <input type="number" name="pages" id="pages" step="1" min="1" maxlength="15">
             <label for="read">Read?</label>
             <div>
                 <input type="radio" name="read" value="Yes">Yes
@@ -35,7 +35,9 @@
             <div id="shelf-text">Book Shelf</div>
             <button id="show-dialog">New Book</button>
         </div>
-        <div id="library"></div>
+        <div id="library-wrapper">
+            <div id="library"></div>
+        </div>
         <div id="display-container"></div>
     </div>
 </body>
