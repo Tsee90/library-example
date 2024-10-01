@@ -83,6 +83,7 @@ h1 {
     width: 300px;
     min-height: 300px;
     padding: 20px;
+    position: relative;
 }
 
 #book-buttons {
@@ -133,7 +134,8 @@ h1 {
 }
 
 .book.focused {
-    background-color: rgb(247, 181, 121);
+    border-left: 5px solid white;
+    border-bottom: 5px ridge white;
 }
 .book.unfocused {
     background-color: rgb(194, 141, 92);
@@ -145,4 +147,32 @@ h1 {
     flex-direction: rpw;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.exit-button {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-style: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background-color: gray;
+    font-weight: bold;
+}
+
+.exit-button:hover {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
+}
+
+#book-buttons .update-button:hover {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
 }

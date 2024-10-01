@@ -122,12 +122,38 @@ function createUpdateReadButton(index) {
     return updateReadButton;
 }
 
+function createExitButton (index) {
+    const exitButton = document.createElement('button');
+    exitButton.textContent = 'x';
+    exitButton.value = index;
+    exitButton.className = 'exit-button';
+    exitButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const value = event.target.value;
+        const displayList = displayContainer.querySelectorAll('.book-display');
+        
+        displayList.forEach((div) => {
+            if (parseInt(value) === parseInt(div.id)){
+                div.remove();
+                const libraryBooks = library.querySelectorAll('.book');
+                libraryBooks.forEach((div) => {
+                    if (parseInt(value) === parseInt(div.id)){
+                        div.classList.remove('focused');
+                    }
+                });
+            }
+        });
+    });
+    return exitButton;
+}
+
 //Updates the library display and makes title clickable to reveal book information and remove button
 function updateLibraryDisplay (book) {   
     const bookText = document.createElement('div');
     bookText.className = 'book';
     bookText.id = book.index; //This will allow us to reference target the book div within the library container
     bookText.textContent = book.title;
+    bookText.style.backgroundColor = getRandomColor();
     //Make title clickable
     bookText.addEventListener('click', (event) => {
         event.preventDefault();
@@ -157,13 +183,29 @@ function updateLibraryDisplay (book) {
             bookButtons.appendChild(updateReadButton);
             const removeButton = createRemoveButton(index);
             bookButtons.appendChild(removeButton);
+            const exitButton = createExitButton(index);
             bookDisplay.appendChild(bookInfo);
             bookDisplay.appendChild(bookButtons);
+            bookDisplay.appendChild(exitButton);
             displayContainer.appendChild(bookDisplay);
         }
     });
     library.appendChild(bookText);
     
+}
+
+function getRandomColor() {
+    const colors = [
+        '#FFB3BA', 
+        '#AEC6CF', 
+        '#77DD77', 
+        '#FDFD96', 
+        '#CBAACB', 
+        '#FFB347'  
+    ];
+
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
 }
 
 addBookToLibrary('The Hitchhicker\'s Guide to the Galaxy', 'Douglas Adams', '224', 'Yes');
