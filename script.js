@@ -11,6 +11,7 @@ const bookForm = document.querySelector('#book-form');
 const displayContainer = document.querySelector('#display-container');
 const errorMessage = document.querySelector('#error-message');
 
+//New Book button shows input dialog
 const showDialogButton = document.querySelector('#show-dialog');
 showDialogButton.addEventListener('click', () => {
 dialog.showModal();
@@ -23,7 +24,7 @@ addButton.addEventListener('click', (event) => {
     const author = document.querySelector('#author').value;
     const pages = document.querySelector('#pages').value;
     const read = document.querySelector('input[name="read"]:checked').value;
-    const check = checkInputs(title, author, pages);
+    const check = checkInputs(title, author, pages);//Will return true or an error message
     if (check === true){
         addBookToLibrary(title, author, pages, read);
         errorMessage.textContent = '';
@@ -34,6 +35,7 @@ addButton.addEventListener('click', (event) => {
     }
 });
 
+//Checks user inputs and returns true or appropriate error message
 function checkInputs (title, author, pages) {
     if (title === '') {
         return 'Please add title';
@@ -48,6 +50,7 @@ function checkInputs (title, author, pages) {
     }
 }
 
+//Reset form
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', (event) =>{
     event.preventDefault();
@@ -55,6 +58,8 @@ clearButton.addEventListener('click', (event) =>{
     errorMessage.textContent = '';
 });
 
+
+//Close form
 const closeButton = document.querySelector('#close');
 closeButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -73,7 +78,7 @@ function Book(title, author, pages, read, index) {
 }
 
 function addBookToLibrary (title, author, pages, read) {
-    const index = myLibrary.length;
+    const index = myLibrary.length.toString();//To string for logical consistency
     const book = new Book(title, author, pages, read, index);
     myLibrary.push(book);
     updateLibraryDisplay(book);
@@ -83,15 +88,14 @@ function removeBookFromLibrary (index) {
     //Select all divs inside library container and remove the one equal to index
     const libraryBooks = library.querySelectorAll('.book');
     libraryBooks.forEach((div) => {
-        const id = div.id;
-        if (id === index) {
+        if (div.book.index === index) {
             div.remove();
         }
     });
+    //Update display container
     const displayList = displayContainer.querySelectorAll('.book-display');
     displayList.forEach((div) => {
-        const id = div.id;
-        if(id === index){
+        if(div.book.index === index){
             div.remove();
         }
     })
@@ -99,33 +103,36 @@ function removeBookFromLibrary (index) {
     myLibrary = myLibrary.filter((book) => book.index !== index);
     //Update all the books with their new indexes
     myLibrary.forEach((book, index) => {
-        book.index = index;
+        book.index = index.toString();
     })
 }
 
-function createRemoveButton(index) {
+/* 
+    All of the creation functions below take a book object as an argument. This allows the created object to store a reference to the book object it is associated with so that it can pull an up to date reference to any of it's properties. Allows for consistency and flexibility in changing the code.
+*/
+function createRemoveButton(book) {
     const removeButton = document.createElement('button');
     removeButton.className = 'remove-button';
-    removeButton.value = index;
+    removeButton.book = book;//Store book object reference inside button
     removeButton.textContent = 'Remove';
     removeButton.addEventListener('click', (event) => {
-        const value = event.target.value;
+        const value = event.target.book.index;//Retrieve current index of book
         removeBookFromLibrary(value);
     })
     return removeButton;
 }
 
-function createUpdateReadButton(index) {
+function createUpdateReadButton(book) {
     const updateReadButton = document.createElement('button');
-    updateReadButton.value = index;
+    updateReadButton.book = book;//Store book object reference inside button
     updateReadButton.className = 'update-button';
-    if (myLibrary[index].read === 'Yes') {
+    if (myLibrary[book.index].read === 'Yes') {
         updateReadButton.textContent = 'Mark As Unread';
     } else {
         updateReadButton.textContent = 'Mark As Read';
     }
     updateReadButton.addEventListener('click', (event) => {
-        const value = event.target.value;
+        const value = event.target.book.index;//Retrieve current index of book
         if (myLibrary[value].read === 'Yes') {
             myLibrary[value].read = 'No'
             updateReadButton.textContent = 'Mark As Read';
@@ -133,11 +140,12 @@ function createUpdateReadButton(index) {
             myLibrary[value].read = 'Yes'
             updateReadButton.textContent = 'Mark As Unread';
         }
+        //Update display
         const displayList = displayContainer.querySelectorAll('.book-display');
         displayList.forEach((div) => {
-            if (parseInt(value) === parseInt(div.id)){
+            if (parseInt(value) === parseInt(div.book.index)){
                 const bookInfo = div.querySelector('#book-info');
-                bookInfo.innerHTML = myLibrary[index].info();
+                bookInfo.innerHTML = myLibrary[book.index].info();
             }
         });
         
@@ -145,20 +153,21 @@ function createUpdateReadButton(index) {
     return updateReadButton;
 }
 
-function createExitButton (index) {
+function createExitButton (book) {
     const exitButton = document.createElement('button');
     exitButton.textContent = 'x';
-    exitButton.value = index;
+    exitButton.book = book;//Store book object reference inside button
     exitButton.className = 'exit-button';
     exitButton.addEventListener('click', (event) => {
-        const value = event.target.value;
+        const value = event.target.book.index;//Retrieve current index of book
+        //Find book in display list and remove
         const displayList = displayContainer.querySelectorAll('.book-display');
         displayList.forEach((div) => {
-            if (parseInt(value) === parseInt(div.id)){
+            if (parseInt(value) === parseInt(div.book.index)){
                 div.remove();
                 const libraryBooks = library.querySelectorAll('.book');
                 libraryBooks.forEach((div) => {
-                    if (parseInt(value) === parseInt(div.id)){
+                    if (parseInt(value) === parseInt(div.book.index)){
                         div.classList.remove('focused');
                     }
                 });
@@ -170,52 +179,67 @@ function createExitButton (index) {
 
 //Updates the library display and makes title clickable to reveal book information and remove button
 function updateLibraryDisplay (book) {   
-    const bookText = document.createElement('div');
-    bookText.className = 'book';
-    bookText.id = book.index; //This will allow us to reference target the book div within the library container
-    bookText.textContent = book.title;
-    bookText.style.backgroundColor = getRandomColor();
-    //Make title clickable
-    bookText.addEventListener('click', (event) => {
-        event.preventDefault();
-        let check = false;
-        const displayList = displayContainer.querySelectorAll('.book-display');
-        if (displayList.length > 0){
-            //checks if book is already displayed
+    const bookOnShelf = document.createElement('div');
+    bookOnShelf.book = book;//Store book object reference inside div
+    bookOnShelf.className = 'book';
+    bookOnShelf.textContent = book.title;
+    bookOnShelf.style.backgroundColor = getRandomColor();
+    bookOnShelf.addEventListener('click', (event) => {
+        const clickBook = event.target.book;
+        const check = checkDisplay(clickBook);//Checks if book is already in the display as to not duplicate. Returns false if not found
+        if (!check) {
+            //Book is not found, creates a new card for display
+            const bgColor = window.getComputedStyle(event.target).backgroundColor;
+            const card = createCard(clickBook, bgColor);
+            displayContainer.appendChild(card);
+            event.target.classList.add('focused');
+        } else {
+            //Book is found, removes the card display but does not remove the book from array
+            const displayList = displayContainer.querySelectorAll('.book-display');
             displayList.forEach((div) => {
-                if(event.target.id === div.id){
+                if(event.target.book.index === div.book.index){
                     displayContainer.removeChild(div);
                     event.target.classList.remove('focused');
                     check = true;
                 }
             });
         }
-        //If book is not already displayed, create a new book display
-        if (check === false){
-            const bgColor = window.getComputedStyle(event.target).backgroundColor;
-            const bookDisplay = document.createElement('div');
-            bookDisplay.style.borderColor = bgColor;
-            bookDisplay.className = 'book-display';
-            bookDisplay.id = book.index;
-            const bookInfo = document.createElement('div');
-            bookInfo.id = 'book-info';
-            const bookButtons = document.createElement('div');
-            bookButtons.id = 'book-buttons';
-            bookText.classList.add('focused');
-            bookInfo.innerHTML = book.info();
-            const index = book.index;
-            const updateReadButton = createUpdateReadButton(index);
-            bookButtons.appendChild(updateReadButton);
-            const removeButton = createRemoveButton(index);
-            bookButtons.appendChild(removeButton);
-            const exitButton = createExitButton(index);
-            bookDisplay.appendChild(bookInfo);
-            bookDisplay.appendChild(bookButtons);
-            bookDisplay.appendChild(exitButton);
-            displayContainer.appendChild(bookDisplay);
+    });
+    library.appendChild(bookOnShelf);
+}
+
+//Creates a card element and returns it
+function createCard(book, bgColor) {
+    const bookDisplay = document.createElement('div');
+    bookDisplay.style.borderColor = bgColor;
+    bookDisplay.className = 'book-display';
+    bookDisplay.book = book;//Store book object reference inside card
+    const bookInfo = document.createElement('div');
+    bookInfo.id = 'book-info';
+    const bookButtons = document.createElement('div');
+    bookButtons.id = 'book-buttons';
+    bookInfo.innerHTML = book.info();
+    const updateReadButton = createUpdateReadButton(book);
+    bookButtons.appendChild(updateReadButton);
+    const removeButton = createRemoveButton(book);
+    bookButtons.appendChild(removeButton);
+    const exitButton = createExitButton(book);
+    bookDisplay.appendChild(bookInfo);
+    bookDisplay.appendChild(bookButtons);
+    bookDisplay.appendChild(exitButton);
+    return bookDisplay;
+}
+
+//Checks if card is already on display. Returns false if not found
+function checkDisplay (book) {
+    const display = displayContainer.querySelectorAll('.book-display');
+    let check = false;
+    display.forEach((div) => {
+        if (div.book.index === book.index){
+            check = true;
         }
     });
-    library.appendChild(bookText);
+     return check;
 }
 
 function getRandomColor() {
@@ -239,7 +263,6 @@ addBookToLibrary('Dune', 'Frank Herbert', '412', 'No');
 addBookToLibrary('Misery', 'Stephen King', '432', 'Yes');
 addBookToLibrary('The Hobbit', 'J.R.R Tolkien', '304', 'No');
 addBookToLibrary('Dark Matter', 'Blake Crouch','342', 'Yes');
-
 
 
 
